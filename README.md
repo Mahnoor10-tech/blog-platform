@@ -25,3 +25,31 @@ salt, so equal passwords do not need to produce equal stored hashes.
 A JWT contains a header, payload, and signature. This practice payload includes
 the user ID (`sub`) and expiration (`exp`). A signed JWT is not encrypted, so
 do not put passwords or other sensitive information in its payload.
+
+## Backend authentication API
+
+The FastAPI backend is in `backend/`. In PowerShell, prepare its local settings
+and start the development server:
+
+```powershell
+cd backend
+.\.venv\Scripts\Activate.ps1
+Copy-Item .env.example .env
+```
+
+Set your local database password and a private random `JWT_SECRET` in
+`backend/.env`; never commit that file. Install backend requirements and create
+the development tables once:
+
+```powershell
+python -m pip install -r requirements.txt
+python -c "from app.database import Base, engine; import app.models; Base.metadata.create_all(engine)"
+uvicorn app.main:app --reload --port 8001
+```
+
+Open `http://127.0.0.1:8001/docs`. Register with `POST /auth/register`, then
+log in through `POST /auth/login` using the email in the OAuth2 form's
+`username` field. Use the returned bearer token for `GET /users/me`.
+
+The development table command creates missing tables; use Alembic migrations
+for future schema changes.
