@@ -50,6 +50,9 @@ python -m pip install -r requirements.txt
 Open `http://127.0.0.1:8001/docs`. Register with `POST /auth/register`, then
 log in through `POST /auth/login` using the email in the OAuth2 form's
 `username` field. Use the returned bearer token for `GET /users/me`.
+Authenticated users can create posts with `POST /posts`; published posts are
+available through `GET /posts` and `GET /posts/{post_id}`. Only a post's author
+can update or delete it.
 
 The initial users migration is baselined against the existing development
 database; subsequent schema changes are applied as migrations.
