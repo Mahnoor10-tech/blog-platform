@@ -43,7 +43,7 @@ the development tables once:
 
 ```powershell
 python -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -c "from app.database import Base, engine; import app.models; Base.metadata.create_all(engine)"
+.\.venv\Scripts\python.exe -m alembic upgrade head
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8001
 ```
 
@@ -51,5 +51,5 @@ Open `http://127.0.0.1:8001/docs`. Register with `POST /auth/register`, then
 log in through `POST /auth/login` using the email in the OAuth2 form's
 `username` field. Use the returned bearer token for `GET /users/me`.
 
-The development table command creates missing tables; use Alembic migrations
-for future schema changes.
+The initial users migration is baselined against the existing development
+database; subsequent schema changes are applied as migrations.
