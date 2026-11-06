@@ -1,0 +1,74 @@
+.app {
+  min-height: 100vh;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.brand {
+  color: #172554;
+  font-size: 1.25rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 24px;
+}
+
+.site-header nav span {
+  color: #334155;
+  font-weight: 600;
+}
+
+.welcome {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 112px 24px;
+}
+
+.eyebrow {
+  color: #2563eb;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.welcome h1 {
+  max-width: 680px;
+  margin: 16px 0;
+  color: #172554;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.welcome > p:last-child {
+  max-width: 520px;
+  color: #475569;
+  font-size: 1.125rem;
+}
+
+@media (max-width: 520px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .site-header nav {
+    gap: 16px;
+  }
+
+  .welcome {
+    padding-top: 72px;
+  }
+}

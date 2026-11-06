@@ -56,3 +56,17 @@ can update or delete it.
 
 The initial users migration is baselined against the existing development
 database; subsequent schema changes are applied as migrations.
+
+## Frontend
+
+The React/Vite scaffold is in `frontend/`. Start the frontend development
+server from PowerShell:
+
+```powershell
+cd frontend
+npm.cmd install
+npm.cmd run dev
+```
+
+The starter page is only the frontend shell; registration, login, AuthContext,
+protected routes, and post pages are the next implementation steps.
