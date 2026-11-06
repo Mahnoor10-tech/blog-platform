@@ -61,6 +61,26 @@ def read_published_post(
     return post
 
 
+@router.get("/{post_id}/edit", response_model=PostResponse)
+def read_post_for_edit(
+    post_id: int,
+    db: Annotated[Session, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> Post:
+    statement = (
+        select(Post)
+        .options(selectinload(Post.author))
+        .where(Post.id == post_id, Post.author_id == current_user.id)
+    )
+    post = db.scalar(statement)
+    if post is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Post not found",
+        )
+    return post
+
+
 @router.put("/{post_id}", response_model=PostResponse)
 def update_post(
     post_id: int,

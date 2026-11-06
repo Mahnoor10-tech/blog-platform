@@ -59,8 +59,9 @@ database; subsequent schema changes are applied as migrations.
 
 ## Frontend
 
-The React/Vite scaffold is in `frontend/`. Start the frontend development
-server from PowerShell:
+The React/Vite app is in `frontend/`. It includes registration/login,
+session-based authentication, protected write/edit routes, the published blog
+feed and post detail/create/edit/delete screens. Start it from PowerShell:
 
 ```powershell
 cd frontend
@@ -68,5 +69,27 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-The starter page is only the frontend shell; registration, login, AuthContext,
-protected routes, and post pages are the next implementation steps.
+The app calls the API at `http://127.0.0.1:8001` by default. Copy
+`.env.example` to `.env.local` to override `VITE_API_URL`. Start the backend
+separately as described above.
+
+The browser stores the access token in `sessionStorage` for this training
+project; this is a learning setup, not a production authentication design.
+
+## Run the full stack with Docker Compose
+
+From the repository root in PowerShell, create a local Compose environment file
+and change the placeholder password and JWT secret to private values:
+
+```powershell
+Copy-Item .env.example .env
+notepad .env
+docker compose up --build
+```
+
+Open the frontend at `http://localhost:5174`, the API docs at
+`http://localhost:8001/docs`, and PostgreSQL on host port `5434`. Compose waits
+for PostgreSQL, then applies all Alembic migrations before starting the API.
+The root `.env` file is ignored by Git and must not be committed.
+
+The schema has three migrations: users, posts, and a published-feed index.

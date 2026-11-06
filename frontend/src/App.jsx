@@ -1,28 +1,26 @@
-import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+import SiteLayout from './components/SiteLayout.jsx'
+import AuthPage from './pages/AuthPage.jsx'
+import HomePage from './pages/HomePage.jsx'
+import PostPage from './pages/PostPage.jsx'
+import WritePostPage from './pages/WritePostPage.jsx'
 
 function App() {
   return (
-    <main className="app">
-      <header className="site-header">
-        <a className="brand" href="/">
-          Blog Platform
-        </a>
-        <nav aria-label="Main navigation">
-          <span>Home</span>
-          <span>Login</span>
-          <span>Register</span>
-        </nav>
-      </header>
-
-      <section className="welcome">
-        <p className="eyebrow">A place for your ideas</p>
-        <h1>Stories worth sharing.</h1>
-        <p>
-          The blog is getting ready. Next, we will connect registration and
-          login to the API.
-        </p>
-      </section>
-    </main>
+    <Routes>
+      <Route element={<SiteLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="register" element={<AuthPage mode="register" />} />
+        <Route path="login" element={<AuthPage mode="login" />} />
+        <Route path="posts/:postId" element={<PostPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="write" element={<WritePostPage />} />
+          <Route path="posts/:postId/edit" element={<WritePostPage />} />
+        </Route>
+        <Route path="*" element={<p className="notice">Page not found.</p>} />
+      </Route>
+    </Routes>
   )
 }
 
